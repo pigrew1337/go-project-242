@@ -6,3 +6,6 @@ build:
 
 go run:
 	go run  cmd/hexlet-path-size/main.go
+
+binarnik:
+	./bin/hexlet-path-size
