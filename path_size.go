@@ -21,18 +21,18 @@ func GetSize() {
 	fmt.Scan(&filename)
 	fileInfo, err := os.Lstat(filename) // файл или папка
 	if err != nil {
-		log.Fatal("мы упали 21", err)
+		log.Fatal("распознование файл/папка", err)
 	}
 	var size int64
 	if fileInfo.IsDir() { // если папка
 		readFile, err := os.ReadDir(filename) // читаем папку
 		if err != nil {
-			log.Fatal("мы упали 27", err)
+			log.Fatal("чтение папки", err)
 		}
 		for _, entry := range readFile { // проходимся по папке
 			info, err := entry.Info() // получаем инфо о файлах
 			if err != nil {
-				log.Fatal("мы упали 33", err)
+				log.Fatal("инфо о файле", err)
 			}
 			size += info.Size()
 		}
