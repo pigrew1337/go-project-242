@@ -12,7 +12,13 @@ import (
 
 // 2 шаг
 func Cli() {
-	(&cli.Command{}).Run(context.Background(), os.Args)
+	cmd := &cli.Command{
+        Name:  "hexlet-path-size",
+        Usage: "print size of a file or directory;",
+    }
+    if err := cmd.Run(context.Background(), os.Args); err != nil {
+        log.Fatal(err)
+    }
 }
 
 // 3 шаг
@@ -21,18 +27,18 @@ func GetSize() {
 	fmt.Scan(&filename)
 	fileInfo, err := os.Lstat(filename) // файл или папка
 	if err != nil {
-		log.Fatal("распознование файл/папка", err)
+		log.Fatal("распознование файл/папка: ", err)
 	}
 	var size int64
 	if fileInfo.IsDir() { // если папка
 		readFile, err := os.ReadDir(filename) // читаем папку
 		if err != nil {
-			log.Fatal("чтение папки", err)
+			log.Fatal("чтение папки: ", err)
 		}
 		for _, entry := range readFile { // проходимся по папке
 			info, err := entry.Info() // получаем инфо о файлах
 			if err != nil {
-				log.Fatal("инфо о файле", err)
+				log.Fatal("инфо о файле: ", err)
 			}
 			size += info.Size()
 		}

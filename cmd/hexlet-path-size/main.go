@@ -7,6 +7,6 @@ import (
 
 func main() {
 	fmt.Println("Hello from Hexlet!")
-	//code.Cli() закрыл чтобы не мешалось
+	code.Cli() 
 	code.GetSize()
 }
