@@ -10,3 +10,6 @@ go run:
 # запуск бинарника
 binarnik:
 	./bin/hexlet-path-size
+# запуск теста
+test:
+	go test -v ./path_size_test.go
