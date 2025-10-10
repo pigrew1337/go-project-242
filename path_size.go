@@ -24,7 +24,10 @@ func Cli() {
 // 3 шаг
 func GetSize() {
 	var filename string //ввод
-	fmt.Scan(&filename)
+	_,err := fmt.Scan(&filename)
+	if err != nil {
+		panic(err)
+	}
 	fileInfo, err := os.Lstat(filename) // файл или папка
 	if err != nil {
 		log.Fatal("распознование файл/папка: ", err)
@@ -46,5 +49,8 @@ func GetSize() {
 		size = fileInfo.Size()
 	}
 	res := fmt.Sprintf("%vB %s \n", size, filename)
-	io.WriteString(os.Stdout, res) // можно просто через println
+	_, err = io.WriteString(os.Stdout, res) // можно просто через println
+	if err != nil {
+		panic(err)
+	}
 }
