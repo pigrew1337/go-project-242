@@ -3,46 +3,36 @@ package code_test
 import(
 	"code"
 	"testing"
-	"os"
-	"bytes"
-	"fmt"
-	"io"
 	"github.com/stretchr/testify/require"
+	"math"
 )
 
+type fileInfTest struct{
+	name string
+    size  int64
+	formatsize float64
+}
+
 func TestGetSize(t *testing.T) {
-	rtdin,wstdin,_ := os.Pipe() // пайпуем Stdin вход
-	oldStdin := os.Stdin // сохраняем оригинал
-	os.Stdin = rtdin // перенапрвляем ввод на наш Pipe
-
-	rstdount,wstdount,_ := os.Pipe() // пайпуем Stdout выход
-	oldStdout := os.Stdout // сохраняем оригинал
-	os.Stdout = wstdount // перенапрвляем вывод на наш Pipe
-
-	_, err := io.WriteString(wstdin,"testdata/test.txt\n") // запись в Stdin
-	if err != nil {
-		panic(err)
+	stTest := fileInfTest{
+		name: "testdata/test.txt", 
+		size: 55,
 	}
-	err = wstdin.Close() // закрываем чтобы fmt не ждал бесконечно
-	if err != nil {
-		panic(err)
-	}
+	stCode := &code.FileInf{}
+	code.GetSize("testdata/test.txt",stCode)
+	require.Equal(t,stTest.name,stCode.Name)
+	require.Equal(t,stTest.size,stCode.Size)
+}
 
-	code.GetSize() // вызовы функции которая принимает захваченный Stdin
-	err = wstdount.Close() // закрываем чтобы завершить чтение вывода
-	if err != nil {
-		panic(err)
+func TestFormatSize(t *testing.T) {
+	stTest := fileInfTest{
+		name: "testdata", 
+		formatsize: 0.1,
 	}
-	os.Stdout = oldStdout // возвращаем в исходное состояние
-	os.Stdin  = oldStdin
-
-	var buf bytes.Buffer // буффер для чтения вывода
-	_, err = io.Copy(&buf, rstdount) // копируем ответ GetSize в stdout
-	if err != nil {
-		panic(err)
-	}
-
-    output := buf.String() // байты -> строка
-	result := fmt.Sprintf("%vB %s \n", 55, "testdata/test.txt") // ождиаемый результат
-	require.Equal(t,output,result) // проверка через testify
+	stCode := &code.FileInf{}
+	code.GetSize("testdata",stCode)
+	code.FormatSize(stCode)
+	require.Equal(t,stTest.name,stCode.Name)
+	stCode.FormatSize = math.Round(stCode.FormatSize*10) / 10
+	require.Equal(t,stCode.FormatSize,stTest.formatsize)
 }
