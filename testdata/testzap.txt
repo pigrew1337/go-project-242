@@ -1,0 +1,1 @@
+go run  cmd/hexlet-path-size/main.go /home/pigrew

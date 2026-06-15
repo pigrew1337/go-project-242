@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Size Checker</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<h2>File & Folder Size</h2>
+
+<!-- формат -->
+<div>
+    <p>Format:</p>
+    <select id="format">
+        <option value="bytes">Bytes</option>
+        <option value="kb">KB</option>
+        <option value="mb">MB</option>
+        <option value="gb">GB</option>
+    </select>
+</div>
+
+<!-- файлы -->
+<div>
+    <p>Files:</p>
+    <input id="filesInput" type="file" multiple>
+    <pre id="filesResult"></pre>
+</div>
+
+<!-- папка -->
+<div>
+    <p>Folder:</p>
+    <input id="folderInput" type="file" webkitdirectory multiple>
+    <pre id="folderResult"></pre>
+</div>
+
+<script src="/static/app.js"></script>
+
+</body>
+</html>
